@@ -3,6 +3,8 @@ package edu.br.generics;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.br.Produto;
+
 public class DAOList<T> implements GenericsDAO<T> {
     private List<T> lista;
         public DAOList() {
@@ -20,16 +22,25 @@ public class DAOList<T> implements GenericsDAO<T> {
         return lista;
     }
 
-    @Override
+   @Override
     public T buscarPorId(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'buscarPorId'");
+       for (T o : lista) {
+            if (o instanceof Produto) {
+                Produto p = (Produto) o;
+                if (p.getId() == id) {
+                    return p;
+                }
+            }
+        }
+        return null;
     }
 
     @Override
     public void remover(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'remover'");
+        T objeto = buscarPorId(id);
+        if (objeto != null) {
+            lista.remove(objeto);
+        }
     }
 
 }

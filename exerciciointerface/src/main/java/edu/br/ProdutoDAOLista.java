@@ -1,32 +1,39 @@
 package edu.br;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.br.object.Object;
-import edu.br.object.ObjectDAO;
+public class ProdutoDAOLista implements ProdutoDAO {
+    private List<Produto> produtos;
 
-public class ProdutoDAOLista implements ObjectDAO{
-@Override
-    public void inserir(Object object) {
-        System.out.println("Simulando: Produto salvo no BANCO DE DADOS MySQL!");
+    public ProdutoDAOLista() {
+        this.produtos = new ArrayList<>();
     }
 
     @Override
-    public List<Object> listar() {
-        System.out.println("Simulando: Buscando todos do BANCO DE DADOS...");
-        return new ArrayList<>();
+    public void inserir(Produto produto) {
+        produtos.add(produto);
     }
 
     @Override
-    public Object buscarPorId(int id) {
-        System.out.println("Simulando: Buscando ID " + id + " no BANCO DE DADOS...");
-        return null; 
+    public List<Produto> listar() {
+        return produtos;
+    }
+
+    @Override
+    public Produto buscarPorId(int id) {
+        for (Produto p : produtos) {
+            if (p.getId() == id) {
+                return p;
+            }
+        }
+        return null;
     }
 
     @Override
     public void remover(int id) {
-        System.out.println("Simulando: Produto removido do BANCO DE DADOS!");
+        Produto produto = buscarPorId(id);
+        if (produto != null) {
+            produtos.remove(produto);
+        }
     }
-    
 }
